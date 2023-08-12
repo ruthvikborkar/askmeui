@@ -17,3 +17,22 @@ function getBotResponse(input) {
         return "Try asking something else!";
     }
 }
+
+function getFromBackend(input) {
+    var url = "http://localhost:8080/openAi/bot/chat?prompt=";
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url+input, true);
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        var data = JSON.parse(xhr.responseText);
+        console.log(data);
+        return data;
+      } else {
+        console.log("Error: " + xhr.status);
+      }
+    };
+    xhr.send();
+
+    return getBotResponse(input);
+
+  }
